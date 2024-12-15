@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="page-cover">
+      <div class="side">
+        <aside class="sidebar">
+          <!-- Sidebar header -->
+          <header class="sidebar-header">
+            <a href="#" class="header-logo">
+              <img src="gctu.png" alt="GCTU Logo" />
+              <p class="school-name">
+                GCTU <br />
+                Archive System
+              </p>
+            </a>
+            <button class="toggler sidebar-toggler">
+              <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+            <button class="toggler menu-toggler">
+              <span class="material-symbols-rounded">menu</span>
+            </button>
+          </header>
+          <nav class="sidebar-nav">
+            <!-- Primary top nav -->
+            <ul class="nav-list primary-nav">
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-dashboard">
+                  <span class="nav-icon material-symbols-rounded"
+                    >dashboard</span
+                  >
+                  <span class="nav-label" id="dashboard">Dashboard</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-notifications">
+                  <span class="nav-icon material-symbols-rounded"
+                    >notifications</span
+                  >
+                  <span class="nav-label" id="notifications"
+                    >Notifications</span
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-settings">
+                  <span class="nav-icon material-symbols-rounded"
+                    >settings</span
+                  >
+                  <span class="nav-label">Settings</span>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav-list secondary-nav">
+              <li class="nav-item">
+                <a href="profile.html" class="nav-link" id="nav-profile">
+                  <span class="nav-icon material-symbols-rounded"
+                    >account_circle</span
+                  >
+                  <span class="nav-label">Profile</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="logout.html" class="nav-link" id="nav-logout">
+                  <span class="nav-icon material-symbols-rounded">logout</span>
+                  <span class="nav-label">Logout</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
+      <div id="dashboard-section" class="main-content">
+        <!-- Dashboard Content -->
+        <div class="search">
+          <header class="mc-header">
+            <div class="logo">
+              <div class="search-logo">
+                <!-- Search Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="search-container">
+              <input type="text" class="search-bar" placeholder="Search..." />
+            </div>
+          </header>
+        </div>
+        <br />
+        <div class="content1">
+          <div class="stat">
+            <div class="total-project">Total Projects: 0</div>
+            <div class="latest-submission">Latest Submission: None</div>
+            <div class="departments">Assigned Department: None</div>
+          </div>
+          <hr class="hr1" />
+          <div class="uploading">
+            <input type="file" id="file-input" />
+            <input
+              type="text"
+              id="file-name-input"
+              placeholder="Enter custom file name"
+            />
+            <button id="upload-button">Upload New Project</button>
+          </div>
+          <div class="uploaded-files-container">
+            <ul id="file-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="notifications-section"
+        class="main-content"
+        style="display: none"
+      >
+        <div class="notification-container">
+          <!-- Notification list -->
+          <div class="notifications-list">
+            <!-- Example Notifications (the same as before) -->
+            <div class="notification">
+              <span class="notification-icon">🔔</span>
+              <div class="notification-content">
+                <p>
+                  <strong>New Message</strong>: You have a new message from the
+                  Admin.
+                </p>
+                <span class="notification-time">5 minutes ago</span>
+              </div>
+              <button class="close-btn">&times;</button>
+            </div>
+            <!-- Add more notifications here as needed -->
+            <!-- Notification 2 -->
+            <div class="notification">
+              <span class="notification-icon">⚠️</span>
+              <div class="notification-content">
+                <p>
+                  <strong>System Alert</strong>: Your session is about to
+                  expire. Save your work.
+                </p>
+                <span class="notification-time">10 minutes ago</span>
+              </div>
+              <button class="close-btn">&times;</button>
+            </div>
+
+            <!-- Notification 3 -->
+            <div class="notification">
+              <span class="notification-icon">✔️</span>
+              <div class="notification-content">
+                <p>
+                  <strong>Success</strong>: Your profile has been successfully
+                  updated.
+                </p>
+                <span class="notification-time">1 hour ago</span>
+              </div>
+              <button class="close-btn">&times;</button>
+            </div>
+
+            <!-- Notification 4 -->
+            <div class="notification">
+              <span class="notification-icon">📅</span>
+              <div class="notification-content">
+                <p>
+                  <strong>Event Reminder</strong>: Don't forget the meeting at 3
+                  PM today.
+                </p>
+                <span class="notification-time">2 hours ago</span>
+              </div>
+              <button class="close-btn">&times;</button>
+            </div>
+
+            <!-- Notification 5 -->
+            <div class="notification">
+              <span class="notification-icon">🔒</span>
+              <div class="notification-content">
+                <p>
+                  <strong>Security Alert</strong>: Someone tried to log into
+                  your account from a new device.
+                </p>
+                <span class="notification-time">3 hours ago</span>
+              </div>
+              <button class="close-btn">&times;</button>
+            </div>
+          </div>
+
+          <!-- Message to display when no notifications remain -->
+          <div class="no-notifications" style="display: none">
+            <p>No Notifications</p>
+          </div>
+        </div>
+      </div>
+      <div id="settings-section" class="main-content">
+        <h1>Account Settings</h1>
+        <div class="settings-container">
+          <form id="settings-form">
+            <div class="settings-field">
+              <label for="username">Username:</label>
+              <input type="text" id="username" placeholder="Enter username" />
+            </div>
+            <div class="settings-field">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+              />
+            </div>
+            <div class="settings-field">
+              <label for="email">Email:</label>
+              <input type="email" id="email" placeholder="Enter email" />
+            </div>
+            <div class="settings-field">
+              <label for="phone">Phone Number:</label>
+              <input type="text" id="phone" placeholder="Enter phone number" />
+            </div>
+            <div class="settings-field">
+              <label for="role">Role:</label>
+              <input
+                type="text"
+                id="role"
+                placeholder="Enter your role ie. Lecturer/Student"
+              />
+            </div>
+            <div class="settings-field">
+              <label for="joined-date">Joined Date:</label>
+              <input type="date" id="joined-date" />
+            </div>
+            <button type="submit" class="settings-save-btn">
+              Save Settings
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div id="profile-section" class="main-content" style="display: none">
+        <h1>Profile</h1>
+        <div class="profile-container">
+          <div class="profile-detail">
+            <h2>Username:</h2>
+            <p id="profile-username">Not Set</p>
+          </div>
+          <div class="profile-detail">
+            <h2>Password:</h2>
+            <p id="profile-password" class="password-hidden">********</p>
+            <button id="toggle-password-btn">Show</button>
+          </div>
+          <div class="profile-detail">
+            <h2>Email:</h2>
+            <p id="profile-email">Not Set</p>
+          </div>
+          <div class="profile-detail">
+            <h2>Phone Number:</h2>
+            <p id="profile-phone">Not Set</p>
+          </div>
+          <div class="profile-detail">
+            <h2>Role:</h2>
+            <p id="profile-role">Not Set</p>
+          </div>
+          <div class="profile-detail">
+            <h2>Joined Date:</h2>
+            <p id="profile-joined-date">Not Set</p>
+          </div>
+        </div>
+      </div>
+      <!-- Logout Modal (Initially hidden) -->
+      <div id="logout-modal" class="logout-modal">
+        <div class="logout-modal-content">
+          <h1>Are you sure you want to log out?</h1>
+          <button id="logout-btn">Logout</button>
+          <button id="cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <!-- Background and blurred section -->
+    <div class="blur-background">
+      <div class="background-image">
+        <!-- Add your background content here, such as an image -->
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal" style="display: none">
+      <div class="login-modal-content">
+        <h2>Login</h2>
+        <form id="login-form">
+          <input
+            type="text"
+            id="login-username"
+            placeholder="Username"
+            required
+          />
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+        <div id="login-error" style="color: red; display: none">
+          Invalid Username or Password
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
