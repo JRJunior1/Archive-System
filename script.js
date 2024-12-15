@@ -250,6 +250,16 @@ function filterFiles(query) {
 }
 
 // Event listener for the upload button
+// Event listener for deleting a file from the list
+fileList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("delete-file-btn")) {
+    const fileItem = e.target.closest("li");
+    fileItem.remove(); // Remove the file from the DOM
+    alert("File deleted successfully!");
+  }
+});
+
+// Updated code to include a delete button when adding files to the list
 document.getElementById("upload-button").addEventListener("click", () => {
   const fileInput = document.getElementById("file-input");
   const file = fileInput.files[0]; // Get the selected file
@@ -265,7 +275,7 @@ document.getElementById("upload-button").addEventListener("click", () => {
     const fileNameWithExtension = `${baseName}.${fileExtension}`;
 
     const departmentSelect = prompt(
-      `Select a department to upload the file:\n1. Computer Science\n2. Cyber Security\n3. Information Technology\n4. Software Engineering\n5. Computer Engineering\n6. Business Administration`
+      "Select a department to upload the file:\n1. Computer Science\n2. Cyber Security\n3. Information Technology\n4. Software Engineering\n5. Computer Engineering\n6. Business Administration"
     );
 
     const departmentIndex = parseInt(departmentSelect) - 1;
@@ -286,13 +296,19 @@ document.getElementById("upload-button").addEventListener("click", () => {
       ).textContent = `Assigned Department: ${selectedDepartment}`;
 
       // Add the uploaded file to the list with the new name
-      const fileList = document.getElementById("file-list");
       const listItem = document.createElement("li");
       const fileLink = document.createElement("a");
+      const deleteButton = document.createElement("button");
+
       fileLink.href = URL.createObjectURL(file);
       fileLink.textContent = fileNameWithExtension;
       fileLink.target = "_blank";
+
+      deleteButton.textContent = "Delete";
+      deleteButton.classList.add("delete-file-btn");
+
       listItem.appendChild(fileLink);
+      listItem.appendChild(deleteButton);
       fileList.appendChild(listItem);
 
       // Clear the file input and custom name input
