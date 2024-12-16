@@ -27,13 +27,19 @@ window.addEventListener("resize", () => {
   }
 });
 
-// Switch to specific sections
+// Function to switch to the given section
 function switchToSection(sectionId) {
   document.querySelectorAll(".main-content").forEach((section) => {
-    section.style.display = "none";
+    section.style.display = section.id === sectionId ? "block" : "none";
   });
-  const selectedSection = document.getElementById(sectionId);
-  if (selectedSection) selectedSection.style.display = "block";
+
+  // Hide the settings section when switching away from it
+  if (sectionId !== "settings-section") {
+    const settingsSection = document.getElementById("settings-section");
+    if (settingsSection) {
+      settingsSection.style.display = "none";
+    }
+  }
 }
 
 // Navigation click handlers
@@ -45,6 +51,12 @@ document.getElementById("nav-notifications").addEventListener("click", (e) => {
   e.preventDefault();
   switchToSection("notifications-section");
 });
+
+document.getElementById("nav-folders").addEventListener("click", (e) => {
+  e.preventDefault();
+  switchToSection("folders-section");
+});
+
 document.getElementById("nav-profile").addEventListener("click", (e) => {
   e.preventDefault();
   switchToSection("profile-section");
@@ -131,14 +143,6 @@ window.addEventListener("load", () => {
   updateProfile(username, password, email, phone, role, joinedDate);
 });
 
-// Function to switch to the given section
-function switchToSection(sectionId) {
-  const sections = document.querySelectorAll(".main-content");
-  sections.forEach((section) => {
-    section.style.display = section.id === sectionId ? "block" : "none";
-  });
-}
-
 // Show login modal when user clicks logout
 document
   .getElementById("nav-logout")
@@ -214,27 +218,6 @@ let departmentAssignments = {
   "Business Administration": 0,
 };
 
-// Function to generate a random department
-function getRandomDepartment() {
-  const unassignedDepartments = departments.filter(
-    (department) => departmentAssignments[department] === 0
-  );
-
-  if (unassignedDepartments.length > 0) {
-    const department =
-      unassignedDepartments[
-        Math.floor(Math.random() * unassignedDepartments.length)
-      ];
-    departmentAssignments[department]++;
-    return department;
-  } else {
-    const department =
-      departments[Math.floor(Math.random() * departments.length)];
-    departmentAssignments[department]++;
-    return department;
-  }
-}
-
 // Function to update the file list based on search query
 function filterFiles(query) {
   const fileList = document.getElementById("file-list");
@@ -249,13 +232,26 @@ function filterFiles(query) {
   });
 }
 
-// Event listener for the upload button
 // Event listener for deleting a file from the list
 fileList.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete-file-btn")) {
     const fileItem = e.target.closest("li");
     fileItem.remove(); // Remove the file from the DOM
     alert("File deleted successfully!");
+
+    // Update the total number of projects
+    totalProjects--;
+    document.querySelector(
+      ".total-project"
+    ).textContent = `Total Projects: ${totalProjects}`;
+
+    // Reset the latest submission and assigned department if no files are left
+    if (fileList.children.length === 0) {
+      document.querySelector(".latest-submission").textContent =
+        "Latest Submission: None";
+      document.querySelector(".departments").textContent =
+        "Assigned Department: None";
+    }
   }
 });
 
@@ -358,3 +354,125 @@ closeButtons.forEach((button) => {
 
 // Initial check when the page loads
 checkIfNoNotifications();
+
+// Select elements for the folder section
+const createFolderBtn = document.getElementById("create-folder-btn");
+const folderListContainer = document.getElementById("folder-list-container");
+document.getElementById("create-folder-btn").textContent = "New Folder";
+
+// Function to create a folder and update UI
+function createFolder() {
+  const folderName = prompt("Enter folder name:");
+  if (folderName) {
+    const folderId = `folder-${Date.now()}`; // Use timestamp for unique folder ID
+    const folderItem = document.createElement("li");
+    folderItem.classList.add("folder-item");
+    folderItem.id = folderId;
+    folderItem.innerHTML = `
+      <div class="folder-header">
+        <span>${folderName}</span>
+        <button class="open-folder-btn">Open</button>
+        <button class="delete-folder-btn">Delete</button>
+      </div>
+      <div class="folder-content" id="folder-content-${folderId}" style="display: none;">
+        <div class="file-upload-container">
+          <input type="file" id="file-input-${folderId}" />
+          <input type="text" id="file-name-input-${folderId}" placeholder="Enter custom file name" />
+          <button id="upload-button-${folderId}">Upload File</button>
+        </div>
+        <ul id="file-list-${folderId}" class="file-list">
+          <!-- Files will be dynamically added here -->
+        </ul>
+      </div>
+    `;
+
+    folderListContainer.appendChild(folderItem);
+
+    // Event listener for opening the folder
+    folderItem
+      .querySelector(".open-folder-btn")
+      .addEventListener("click", () => toggleFolder(folderId));
+
+    // Event listener for deleting the folder
+    folderItem
+      .querySelector(".delete-folder-btn")
+      .addEventListener("click", () => deleteFolder(folderId));
+
+    alert("Folder created successfully!");
+  }
+}
+
+// Function to toggle folder visibility and change button text
+function toggleFolder(folderId) {
+  const folderContent = document.getElementById(`folder-content-${folderId}`);
+  const openFolderBtn = document.querySelector(`#${folderId} .open-folder-btn`);
+
+  // Toggle the display of folder content (show/hide)
+  if (folderContent.style.display === "none") {
+    folderContent.style.display = "block";
+    openFolderBtn.textContent = "Close"; // Change button text to 'Close' when folder is open
+  } else {
+    folderContent.style.display = "none";
+    openFolderBtn.textContent = "Open"; // Change button text back to 'Open' when folder is closed
+  }
+
+  // Add the event listener for the file upload button
+  const fileInput = document.getElementById(`file-input-${folderId}`);
+  const fileNameInput = document.getElementById(`file-name-input-${folderId}`);
+  const uploadButton = document.getElementById(`upload-button-${folderId}`);
+
+  uploadButton.addEventListener("click", () =>
+    uploadFile(folderId, fileInput, fileNameInput)
+  );
+}
+
+// Function to upload a file to a folder
+function uploadFile(folderId, fileInput, fileNameInput) {
+  const file = fileInput.files[0];
+  const customFileName = fileNameInput.value.trim();
+  if (file) {
+    const fileExtension = file.name.split(".").pop();
+    const baseName = customFileName
+      ? customFileName
+      : file.name.replace(`.${fileExtension}`, "");
+    const fileNameWithExtension = `${baseName}.${fileExtension}`;
+
+    // Create the file list item with a delete button
+    const fileList = document.getElementById(`file-list-${folderId}`);
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `
+      <a href="${URL.createObjectURL(
+        file
+      )}" target="_blank">${fileNameWithExtension}</a>
+      <button class="delete-file-btn">Delete</button>
+    `;
+    fileList.appendChild(listItem);
+
+    // Add event listener for deleting the file
+    listItem
+      .querySelector(".delete-file-btn")
+      .addEventListener("click", () => deleteFile(listItem));
+
+    // Clear the file inputs
+    fileInput.value = "";
+    fileNameInput.value = "";
+  } else {
+    alert("Please select a file to upload.");
+  }
+}
+
+// Function to delete a folder
+function deleteFolder(folderId) {
+  const folderItem = document.getElementById(folderId);
+  folderItem.remove();
+  alert("Folder deleted successfully!");
+}
+
+// Function to delete a file from the folder
+function deleteFile(fileItem) {
+  fileItem.remove();
+  alert("File deleted successfully!");
+}
+
+// Event listener for creating a new folder
+createFolderBtn.addEventListener("click", createFolder);
