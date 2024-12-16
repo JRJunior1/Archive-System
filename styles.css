@@ -263,7 +263,8 @@ body {
   #notifications-section,
   #profile-section,
   #settings-section,
-  #logout-section {
+  #logout-section,
+  #folders-section {
     transform: translateY(400px); /* Adjust the value as needed */
     max-height: 80vh;
     max-width: 95%;
